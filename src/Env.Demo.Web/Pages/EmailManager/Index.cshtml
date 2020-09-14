@@ -1,0 +1,12 @@
+﻿@page
+@model Env.Demo.Web.Pages.EmailManager.IndexModel
+@{
+}
+
+<form enctype="multipart/form-data" method="post">
+    <abp-input asp-for="@Model.UploadDto.EmailFile" />
+
+    <abp-input asp-for="@Model.UploadDto.Subject" />
+    <abp-input asp-for="@Model.UploadDto.ContentBody" />
+    <abp-button button-type="Primary" type="submit">Send</abp-button>
+</form>

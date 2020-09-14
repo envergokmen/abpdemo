@@ -1,0 +1,11 @@
+{
+  "culture": "en",
+  "texts": {
+    "Menu:Home": "Home",
+    "Welcome": "Welcome",
+    "Menu:Books": "Books",
+    "Menu:BookStore": "Book Store",
+    "FileFormatIsInvalid": "File format is invalid, please upload a CSV file",
+    "LongWelcomeMessage": "Welcome to the application. This is a startup project based on the ABP framework. For more information, visit abp.io."
+  }
+}
