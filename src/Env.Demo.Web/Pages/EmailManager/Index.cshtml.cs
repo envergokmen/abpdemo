@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Globalization;
@@ -14,7 +14,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Localization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Localization;
+using TextTemplateDemo.Demos.Hello;
 using Volo.Abp;
+using Volo.Abp.TextTemplating;
 
 namespace Env.Demo.Web.Pages.EmailManager
 {
@@ -24,17 +26,20 @@ namespace Env.Demo.Web.Pages.EmailManager
         private MyCampaignCreationService uploadService;
 
         private IStringLocalizer<DemoResource> L;
+        private IWebHostEnvironment environment;
 
-        public IndexModel(MyCampaignCreationService _uploadService, IStringLocalizer<DemoResource> _L)
+
+        public IndexModel(IWebHostEnvironment _environment, MyCampaignCreationService _uploadService, IStringLocalizer<DemoResource> _L)
         {
             L = _L;
             uploadService = _uploadService;
+            environment = _environment;
         }
 
-        public void OnGet()
+        public async Task OnGet()
         {
-           // emailQueueRegisterationService.AddToEmailQueue("aaa", "envergokmen@gmail", "123123");
 
+            
         }
 
         [BindProperty]
@@ -42,15 +47,11 @@ namespace Env.Demo.Web.Pages.EmailManager
         public async Task OnPost()
         {
             var emails = await uploadService.Upload(UploadDto);
-            
             await uploadService.AddToQueue(emails, UploadDto);
 
-            var a = "";
-
-
-            //if(result.Exception.InnerException.val.va)
-
         }
+
+ 
 
 
 

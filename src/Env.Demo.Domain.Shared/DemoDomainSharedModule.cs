@@ -40,6 +40,16 @@ namespace Env.Demo
                 options.FileSets.AddEmbedded<DemoDomainSharedModule>();
             });
 
+            Configure<AbpVirtualFileSystemOptions>(options =>
+            {
+                options.FileSets.AddEmbedded<DemoDomainSharedModule>();
+            });
+
+            //Configure<AbpVirtualFileSystemOptions>(options =>
+            //{
+            //    options.FileSets.AddEmbedded<TextTemplateDemoModule>("TextTemplateDemo");
+            //});
+
             Configure<AbpLocalizationOptions>(options =>
             {
                 options.Resources

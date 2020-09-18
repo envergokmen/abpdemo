@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.Application.Services;
@@ -46,7 +47,23 @@ namespace Env.Demo.Web
             return records;
         }
 
+        private async Task<string> UploadFile(UploadEmailDto UploadDto)
+        {
+            var file = Path.Combine(environment.ContentRootPath, @"wwwroot\uploads", UploadDto.EmailFile.FileName);
+            if (Path.GetExtension(UploadDto.EmailFile.FileName) != ".csv")
+            {
+                throw new UserFriendlyException(L.GetString("FileFormatIsInvalid"));
+            }
+            using (var fileStream = new FileStream(file, FileMode.Create))
+            {
+                await UploadDto.EmailFile.CopyToAsync(fileStream);
 
+            }
+
+            return file;
+        }
+
+         
         public async Task<bool> AddToQueue(List<UsernameMailDto> records, UploadEmailDto UploadDto)
         {
             var campaign = await campaignRepo.InsertAsync(new Campaign { Subject = UploadDto.Subject, ItemCount=records.Count });
@@ -83,22 +100,7 @@ namespace Env.Demo.Web
             }
         }
 
-        private async Task<string> UploadFile(UploadEmailDto UploadDto)
-        {
-            var file = Path.Combine(environment.ContentRootPath, @"wwwroot\uploads", UploadDto.EmailFile.FileName);
-            if (Path.GetExtension(UploadDto.EmailFile.FileName) != ".csv")
-            {
-                throw new UserFriendlyException(L.GetString("FileFormatIsInvalid"));
-            }
-            using (var fileStream = new FileStream(file, FileMode.Create))
-            {
-                await UploadDto.EmailFile.CopyToAsync(fileStream);
-
-            }
-
-            return file;
-        }
-
+  
         bool IsValidEmail(string email)
         {
             try
@@ -111,5 +113,17 @@ namespace Env.Demo.Web
                 return false;
             }
         }
+
+
+        public List<CampaignDto> GetCampaigns(int page = 1, int pageSize = 20, Expression<Func<Campaign, Guid>> ord = null)
+        {
+            var result = (from p in campaignRepo.Skip(Convert.ToInt32((page - 1) * pageSize))
+                          select new CampaignDto { Subject="", ItemCount= p.ItemCount, SentItemCount = campaignItemRepo.Count(x => x.CampaignId == p.Id && x.IsSent == true) }
+                ).Take(Convert.ToInt32(pageSize)).ToList();
+
+            return result;
+
+        }
+
     }
 }
