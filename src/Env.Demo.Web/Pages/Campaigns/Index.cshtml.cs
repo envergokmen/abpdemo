@@ -32,7 +32,7 @@ namespace Env.Demo.Web.Pages.Campaigns
 
         public void OnGet()
         {
-             campaigns = campaignService.GetCampaigns(1, 20, (c => c.Id));
+             campaigns = campaignService.GetCampaigns(1, 20, "Id asc");
         }
     }
 }

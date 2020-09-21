@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Linq.Dynamic.Core;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Volo.Abp;
@@ -115,13 +116,17 @@ namespace Env.Demo.Web
         }
 
 
-        public List<CampaignDto> GetCampaigns(int page = 1, int pageSize = 20, Expression<Func<Campaign, Guid>> ord = null)
+        public List<CampaignDto> GetCampaigns(int page = 1, int pageSize = 20, string ord = null)
         {
-            var result = (from p in campaignRepo.Skip(Convert.ToInt32((page - 1) * pageSize))
-                          select new CampaignDto { Subject="", ItemCount= p.ItemCount, SentItemCount = campaignItemRepo.Count(x => x.CampaignId == p.Id && x.IsSent == true) }
-                ).Take(Convert.ToInt32(pageSize)).ToList();
+            var result = (from p in campaignRepo select p);
 
-            return result;
+            result= (from p in campaignRepo.OrderBy(ord) select p);
+
+            var result2 = (from p in result.Skip(Convert.ToInt32((page - 1) * pageSize)).Take(Convert.ToInt32(pageSize))
+                      select new CampaignDto { Subject = "", ItemCount = p.ItemCount, SentItemCount = campaignItemRepo.Count(x => x.CampaignId == p.Id && x.IsSent == true) });
+
+
+            return result2.ToList();
 
         }
 
