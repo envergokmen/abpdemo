@@ -31,7 +31,7 @@ namespace MyProject
 
             if (item != null)
             {
-                item.IsSent = true;
+                //item.IsSent = true;
                 await campaignItemRepo.UpdateAsync(item);
 
             }

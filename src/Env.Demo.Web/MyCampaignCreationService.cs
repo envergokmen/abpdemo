@@ -123,7 +123,7 @@ namespace Env.Demo.Web
             result= (from p in campaignRepo.OrderBy(ord) select p);
 
             var result2 = (from p in result.Skip(Convert.ToInt32((page - 1) * pageSize)).Take(Convert.ToInt32(pageSize))
-                      select new CampaignDto { Subject = "", ItemCount = p.ItemCount, SentItemCount = campaignItemRepo.Count(x => x.CampaignId == p.Id && x.IsSent == true) });
+                      select new CampaignDto { Subject = p.Subject, ItemCount = p.ItemCount, SentItemCount = campaignItemRepo.Count(x => x.CampaignId == p.Id && x.IsSent == true) });
 
 
             return result2.ToList();

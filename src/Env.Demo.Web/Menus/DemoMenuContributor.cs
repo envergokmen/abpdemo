@@ -32,14 +32,20 @@ namespace Env.Demo.Web.Menus
 
             context.Menu.AddItem(
                 new ApplicationMenuItem(
-                    "BooksStore",
-                    l["Menu:BookStore"],
+                    "Campaigns",
+                    l["Menu:Campaigns"],
                     icon: "fa fa-book"
                 ).AddItem(
                     new ApplicationMenuItem(
-                        "BooksStore.Books",
-                        l["Menu:Books"],
-                        url: "/Books"
+                        "Campaigns.List",
+                        l["Menu:CampaignList"],
+                        url: "/"
+                    )
+                ).AddItem(
+                    new ApplicationMenuItem(
+                        "Campaigns.Create",
+                        l["Menu:CampaignCreate"],
+                        url: "/EmailManager"
                     )
                 )
             );

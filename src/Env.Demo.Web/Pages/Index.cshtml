@@ -17,18 +17,52 @@
 }
 <div class="jumbotron text-center">
     <h1>@L["Welcome"]</h1>
-    <div class="row">
-        <div class="col-md-6 mx-auto">
-            <p>@L["LongWelcomeMessage"]</p>
-            <hr class="my-4" />
-        </div>
-    </div>
 
-    <a href="~/EmailManager/Index" class="btn btn-primary px-4">Yeni kampanya oluştur.</a>
-
-
-    <a href="https://abp.io?ref=tmpl" target="_blank" class="btn btn-primary px-4">abp.io</a>
-    @if (!CurrentUser.IsAuthenticated)
-    {
-<a abp-button="Primary" href="~/Account/Login" class="px-4"><i class="fa fa-sign-in"></i> @L["Login"]</a>}
+    <a href="~/EmailManager/Index" class="btn btn-primary px-4">@L["CreateNewCampaign"]</a>
 </div>
+
+
+<table class="table w-100">
+    <tr>
+        <th>
+            @L["Campaign"]
+        </th>
+
+        <th>
+            @L["Item"]
+
+        </th>
+
+        <th>
+            @L["Completion"]
+        </th>
+    </tr>
+
+    @if (Model != null && Model.campaigns != null)
+    {
+
+        foreach (var item in Model.campaigns)
+        {
+
+
+            <tr>
+                <td>
+                    @(item.Subject == null || item.Subject == "" ? " no subject" : item.Subject)
+                </td>
+
+                <td>
+                    @item.ItemCount @("/") @item.SentItemCount
+                </td>
+
+                <td>
+                    @item.PercentSent @("%")
+                </td>
+
+            </tr>
+    
+    }
+
+    }
+
+
+</table>

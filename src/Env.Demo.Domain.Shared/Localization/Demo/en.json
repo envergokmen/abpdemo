@@ -3,8 +3,15 @@
   "texts": {
     "Menu:Home": "Home",
     "Welcome": "Welcome",
-    "Menu:Books": "Books",
-    "Menu:BookStore": "Book Store",
+    "Send": "Send",
+    "Create": "Create",
+    "CreateNewCampaign": "Create a New Campaign",
+    "Item": "Item",
+    "Campaign": "Campaign",
+    "Completion": "Completion",
+    "Menu:Campaigns": "Campaigns",
+    "Menu:CampaignList": "Campaigns List",
+    "Menu:CampaignCreate": "Campaigns Create",
     "FileFormatIsInvalid": "File format is invalid, please upload a CSV file",
     "LongWelcomeMessage": "Welcome to the application. This is a startup project based on the ABP framework. For more information, visit abp.io."
   }

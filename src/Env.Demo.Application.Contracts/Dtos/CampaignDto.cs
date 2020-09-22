@@ -9,6 +9,6 @@ namespace Env.Demo.Dtos
         public string Subject { get; set; }
         public int ItemCount { get; set; }
         public int SentItemCount { get; set; }
-        public double PercentSent  =>  (SentItemCount == 0 || ItemCount == 0) ? 100d : SentItemCount / ItemCount;
+        public double PercentSent  =>  Math.Round(((ItemCount == 0) ? 100d : (double)SentItemCount / (double)ItemCount) *100,2);
     }
 }
