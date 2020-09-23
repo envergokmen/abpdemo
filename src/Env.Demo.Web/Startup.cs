@@ -8,6 +8,7 @@ namespace Env.Demo.Web
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddApplication<DemoWebModule>();
+
         }
 
         public void Configure(IApplicationBuilder app)

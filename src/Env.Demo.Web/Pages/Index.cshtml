@@ -1,68 +1,81 @@
-﻿@page
-@using Microsoft.AspNetCore.Mvc.Localization
-@using Env.Demo.Localization
-@using Volo.Abp.Users
-@model Env.Demo.Web.Pages.IndexModel
-@inject IHtmlLocalizer<DemoResource> L
-@inject ICurrentUser CurrentUser
-@section styles {
-    <abp-style-bundle>
-        <abp-style src="/Pages/Index.css" />
-    </abp-style-bundle>
-}
-@section scripts {
-    <abp-script-bundle>
-        <abp-script src="/Pages/Index.js" />
-    </abp-script-bundle>
-}
-<div class="jumbotron text-center">
-    <h1>@L["Welcome"]</h1>
+﻿@page "{page:double?}"
+    int page=1, int pageSize=5, string order="Id desc"
 
-    <a href="~/EmailManager/Index" class="btn btn-primary px-4">@L["CreateNewCampaign"]</a>
-</div>
+    @using Microsoft.AspNetCore.Mvc.Localization
+    @using Env.Demo.Localization
+    @using Volo.Abp.Users
+    @model Env.Demo.Web.Pages.IndexModel
+    @inject IHtmlLocalizer<DemoResource> L
+    @inject ICurrentUser CurrentUser
+    @section styles {
+        <abp-style-bundle>
+            <abp-style src="/Pages/Index.css" />
+        </abp-style-bundle>
+    }
+    @section scripts {
+        <abp-script-bundle>
+            <abp-script src="/Pages/Index.js" />
+        </abp-script-bundle>
+    }
+    <div class="jumbotron text-center">
+        <h1>@L["Welcome"]</h1>
+
+        <a href="~/EmailManager/Index" class="btn btn-primary px-4">@L["CreateNewCampaign"]</a>
+    </div>
 
 
-<table class="table w-100">
-    <tr>
-        <th>
-            @L["Campaign"]
-        </th>
+    <table class="table w-100">
+        <tr>
+            <th>
+                @L["Campaign"]
+            </th>
 
-        <th>
-            @L["Item"]
+            <th>
+                @L["Item"]
 
-        </th>
+            </th>
 
-        <th>
-            @L["Completion"]
-        </th>
-    </tr>
+            <th>
+                @L["Completion"]
+            </th>
+        </tr>
 
-    @if (Model != null && Model.campaigns != null)
-    {
-
-        foreach (var item in Model.campaigns)
+        @if (Model != null && Model.pageCampaigns != null)
         {
 
+            foreach (var item in Model.pageCampaigns.Campaigns)
+            {
 
-            <tr>
-                <td>
-                    @(item.Subject == null || item.Subject == "" ? " no subject" : item.Subject)
-                </td>
+<tr>
+    <td>
 
-                <td>
-                    @item.ItemCount @("/") @item.SentItemCount
-                </td>
+        @(item.Subject == null || item.Subject == "" ? " no subject" : item.Subject)
+    </td>
 
-                <td>
-                    @item.PercentSent @("%")
-                </td>
+    <td>
+        @item.ItemCount @("/") @item.SentItemCount
+    </td>
 
-            </tr>
-    
-    }
+    <td>
+        @item.ItemCount @("/")
+    </td>
 
-    }
+</tr>
+}
+
+}
 
 
-</table>
+    </table>
+
+
+
+    @if (Model.pageCampaigns != null && Model.pageCampaigns.TotalPage > 0)
+    {
+<nav>
+    <ul class="pagination">
+        @for (int i = 1; i <= Model.pageCampaigns.TotalPage; i++)
+        {
+<li class="page-item @(i==Model.pageCampaigns.Page ?"active":"")"><a class="page-link" href="~/Index?page=@i">@i</a></li>}
+    </ul>
+</nav>}

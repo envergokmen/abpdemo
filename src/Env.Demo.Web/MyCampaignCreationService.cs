@@ -116,17 +116,21 @@ namespace Env.Demo.Web
         }
 
 
-        public List<CampaignDto> GetCampaigns(int page = 1, int pageSize = 20, string ord = null)
+        public PagedCampaignDto GetCampaigns(int page = 1, int pageSize = 20, string ord = null)
         {
-            var result = (from p in campaignRepo select p);
 
-            result= (from p in campaignRepo.OrderBy(ord) select p);
+            PagedCampaignDto result = new PagedCampaignDto();
 
-            var result2 = (from p in result.Skip(Convert.ToInt32((page - 1) * pageSize)).Take(Convert.ToInt32(pageSize))
-                      select new CampaignDto { Subject = p.Subject, ItemCount = p.ItemCount, SentItemCount = campaignItemRepo.Count(x => x.CampaignId == p.Id && x.IsSent == true) });
+            result.TotalItem = campaignRepo.Count();
 
+            var campaignQuery = (from p in campaignRepo.OrderBy(ord) select p);
 
-            return result2.ToList();
+            result.Campaigns = (from p in campaignQuery.Skip(Convert.ToInt32((page - 1) * pageSize)).Take(Convert.ToInt32(pageSize))
+                      select new CampaignDto { Subject = p.Subject, ItemCount = p.ItemCount, SentItemCount = campaignItemRepo.Count(x => x.CampaignId == p.Id && x.IsSent == true) }).ToList();
+
+            result.PageSize = pageSize;
+
+            return result;
 
         }
 

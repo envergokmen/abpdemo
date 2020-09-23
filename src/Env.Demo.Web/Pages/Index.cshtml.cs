@@ -8,7 +8,7 @@ namespace Env.Demo.Web.Pages
     public class IndexModel : DemoPageModel
     {
       
-        public List<CampaignDto> campaigns;
+        public PagedCampaignDto pageCampaigns;
         private MyCampaignCreationService campaignService;
         private IStringLocalizer<DemoResource> L;
 
@@ -18,9 +18,9 @@ namespace Env.Demo.Web.Pages
             campaignService = _campaignService;
         }
 
-        public void OnGet(int page=1, int pageSize=20, string order="Id desc")
+        public void OnGet(int page=1, int pageSize=5, string order="Id desc")
         {
-            campaigns = campaignService.GetCampaigns(page, pageSize, order);
+            pageCampaigns = campaignService.GetCampaigns(page, pageSize, order);
         }
     }
 }
