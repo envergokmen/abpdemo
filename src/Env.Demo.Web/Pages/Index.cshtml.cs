@@ -2,6 +2,7 @@
 using Env.Demo.Localization;
 using Microsoft.Extensions.Localization;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Env.Demo.Web.Pages
 {
@@ -18,9 +19,12 @@ namespace Env.Demo.Web.Pages
             campaignService = _campaignService;
         }
 
-        public void OnGet(int page=1, int pageSize=5, string order="Id desc")
+        public async Task OnGet()
         {
-            pageCampaigns = campaignService.GetCampaigns(page, pageSize, order);
+
+            pageCampaigns = campaignService.GetCampaigns(1, 20, "Id desc");
+
         }
+
     }
 }

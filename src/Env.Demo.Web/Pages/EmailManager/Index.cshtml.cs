@@ -48,7 +48,7 @@ namespace Env.Demo.Web.Pages.EmailManager
             var emails = await uploadService.Upload(UploadDto);
             await uploadService.AddToQueue(emails, UploadDto);
 
-            Redirect("/");
+            Response.Redirect("/");
 
         }
 
