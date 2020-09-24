@@ -14,7 +14,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Localization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Localization;
-using TextTemplateDemo.Demos.Hello;
 using Volo.Abp;
 using Volo.Abp.TextTemplating;
 
